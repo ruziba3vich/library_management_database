@@ -30,27 +30,29 @@ else:
                         CREATE TABLE {tables[0]}
                         (
                             id INTEGER auto_increment,
-                            product_name VARCHAR(30),
-                            product_price INTEGER,
-                            product_category VARCHAR(30),
+                            name VARCHAR (30),
+                            author VARCHAR (50),
+                            number_of_books INTEGER,
+                            number_of_books_available INTEGER,
                             PRIMARY KEY (id)
                         );"""
                         
     cart_table = f"""
                     CREATE TABLE {tables[1]}
                     (
-                        id INTEGER,
-                        PRIMARY KEY (id)
+                        id INTEGER auto_increment,
+                        full_name VARCHAR (50),
+                        age INTEGER (3),
+                        number_of_borrowed_books INTEGER,
+                        PRIMARY KEY (id),
                     );"""
 
     purchase_history_table = f"""
                                 CREATE TABLE {tables[2]}
                                 (
-                                    id INTEGER auto_increment,
-                                    cart_id INTEGER,
-                                    status INTEGER(1),
-                                    PRIMARY KEY (id),
-                                    FOREIGN KEY (cart_id) REFERENCES Cart(id)
+                                    user_id INTEGER,
+                                    book_id INTEGER,
+                                    borrowed_day VARCHAR ()
                                 );"""
 
     users_table = f"""
