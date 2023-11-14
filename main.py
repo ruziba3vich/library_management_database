@@ -24,9 +24,9 @@ else:
     use_query = f"USE {database_name_to_check};"
     cursor.execute(use_query)
     
-    tables = ["Books", "Users", "HistoryOfBooksUserBorrowed", "BookBorrowedUsers"]
+    tables = ["Books", "Users", "BookBorrowedUsers", "HistoryOfBooksUserBorrowed"]
 
-    products_table = f"""
+    books_table = f"""
                         CREATE TABLE {tables[0]}
                         (
                             id INTEGER auto_increment,
@@ -37,7 +37,7 @@ else:
                             PRIMARY KEY (id)
                         );"""
                         
-    cart_table = f"""
+    users_table = f"""
                     CREATE TABLE {tables[1]}
                     (
                         id INTEGER auto_increment,
@@ -46,37 +46,36 @@ else:
                         number_of_borrowed_books INTEGER,
                         PRIMARY KEY (id),
                     );"""
-
-    purchase_history_table = f"""
-                                CREATE TABLE {tables[2]}
-                                (
-                                    user_id INTEGER,
-                                    book_id INTEGER,
-                                    borrowed_day VARCHAR ()
-                                );"""
-
-    users_table = f"""
+    
+    borrowed_users = f"""
+                    CREATE TABLE {tables[2]}
+                    (
+                        id INTEGER PRIMARY KEY,
+                        user_id INTEGER,
+                        book_id INTEGER,
+                        borrow_date VARCHAR (19),
+                        return_date VARCHAR (19),
+                        returned INTEGER (1),
+                        penalty INTEGER,
+                        FOREIGN KEY (user_id) REFERENCES {tables[1]}(id),
+                        FOREIGN KEY (book_id) REFERENCES {tables[0]}(id)
+                    )
+                    """
+    
+    history_of_borrows = f"""
                     CREATE TABLE {tables[3]}
                     (
-                        id INTEGER auto_increment,
-                        username VARCHAR(30),
-                        cart_id INTEGER,
-                        purchase_history_table_id INTEGER,
-                        PRIMARY KEY (id),
-                        FOREIGN KEY (purchase_history_table_id) REFERENCES purchase_history(id),
-                        FOREIGN KEY (cart_id) REFERENCES Cart(id)
+                        user_id INTEGER,
+                        book_id INTEGER,
+                        borrowed_day INTEGER,
+                        returned_day INTEGER,
+                        penalty INTEGER,
+                        FOREIGN KEY (user_id) REFERENCES Users(id),
+                        FOREIGN KEY (book_id) REFERENCES Books(id),
+                        FOREIGN KEY (borrowed_day) REFERENCES BookBorrowedUsers()
                     );"""
 
-    products_for_cart = f"""
-                    CREATE TABLE {tables[4]}
-                    (
-                        cart_id INTEGER,
-                        product_id INTEGER,
-                        FOREIGN KEY (cart_id) REFERENCES Cart(id) ON DELETE CASCADE,
-                        FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE
-                    );"""
-
-    table_names = [products_table, cart_table, purchase_history_table, users_table, products_for_cart]
+    table_names = []
     for table_name in table_names:
         cursor.execute(table_name)
 
@@ -88,3 +87,14 @@ application.exec()
 
 cursor.close()
 db_connection.close()
+
+
+
+
+
+
+
+
+
+
+# b d e f g i g m a
