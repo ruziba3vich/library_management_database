@@ -44,6 +44,7 @@ else:
                         full_name VARCHAR (50),
                         age INTEGER (3),
                         number_of_borrowed_books INTEGER,
+                        path_to_user_s_pic VARCHAR (150),
                         PRIMARY KEY (id),
                     );"""
     
@@ -72,10 +73,11 @@ else:
                         penalty INTEGER,
                         FOREIGN KEY (user_id) REFERENCES Users(id),
                         FOREIGN KEY (book_id) REFERENCES Books(id),
-                        FOREIGN KEY (borrowed_day) REFERENCES BookBorrowedUsers()
+                        FOREIGN KEY (borrowed_day) REFERENCES BookBorrowedUsers(id),
+                        FOREIGN KEY (returned_day) REFERENCES BookBorrowedUsers(id)
                     );"""
 
-    table_names = []
+    table_names = [books_table, users_table, borrowed_users, history_of_borrows]
     for table_name in table_names:
         cursor.execute(table_name)
 
@@ -87,14 +89,3 @@ application.exec()
 
 cursor.close()
 db_connection.close()
-
-
-
-
-
-
-
-
-
-
-# b d e f g i g m a
