@@ -4,10 +4,18 @@ from PyQt5.QtWidgets import (
                             )
 from PyQt5.QtGui import (QPixmap, QPainter, QBitmap, QFont)
 from PyQt5.QtCore import Qt
+from abc_b_add_a_new_reader import AddNewReader
 
 class FirstWindow(QMainWindow):
-    def __init__(self, library_name: str):
+    def __init__(self, library_name: str, db_connection, cursor):
         super().__init__()
+        self.__font = QFont()
+        self.__font.setBold(True)
+        self.__font.setPointSize(10)
+        self.__db_connection = db_connection
+        self.__cursor = cursor
+        self.__add_a_new_reader_window = AddNewReader(
+            self, self.__db_connection, self.__cursor, self.__font)
         self.setWindowTitle(library_name)
         self.setStyleSheet("QWidget#MyWindow { background-image: url('C:/Users/Gulzhaev/Desktop/library_management/pictures/library_management_wallpaper.jpg'); background-repeat: no-repeat; background-position: center; }")
         self.setObjectName("MyWindow")
@@ -25,10 +33,6 @@ class FirstWindow(QMainWindow):
         self.__painter.drawEllipse(0, 0, 220, 220)
         self.__painter.end()
 
-        font = QFont()
-        font.setBold(True)
-        font.setPointSize(10)
-
         self.__scaled_pixmap = self.__pixmap.scaled(220, 220, aspectRatioMode=Qt.KeepAspectRatio)
         self.__image_ofLibrary.setPixmap(self.__scaled_pixmap)
         self.__image_ofLibrary.setMask(self.__circular_mask)
@@ -39,25 +43,26 @@ class FirstWindow(QMainWindow):
         self.__register_a_user_button.setFixedSize(1000, 80)
         self.__register_a_user_button.setStyleSheet("QPushButton { color: white; background-color: rgba(122, 122, 122, 0.451) }"
         "QPushButton:hover { background-color: rgba(207, 206, 203, 0.451) }")
-        self.__register_a_user_button.setFont(font)
+        self.__register_a_user_button.setFont(self.__font)
+        self.__register_a_user_button.clicked.connect(self.register_a_new_reader_button_clicked)
         
         self.__lend_a_book_button = QPushButton("BOOK LENDiNG")
         self.__lend_a_book_button.setFixedSize(1000, 80)
         self.__lend_a_book_button.setStyleSheet("QPushButton { color: white; background-color: rgba(122, 122, 122, 0.451) }"
         "QPushButton:hover { background-color: rgba(207, 206, 203, 0.451) }")
-        self.__lend_a_book_button.setFont(font)
+        self.__lend_a_book_button.setFont(self.__font)
         
         self.__see_book_borrowers_button = QPushButton("REPORTS")
         self.__see_book_borrowers_button.setFixedSize(1000, 80)
         self.__see_book_borrowers_button.setStyleSheet("QPushButton { color: white; background-color: rgba(122, 122, 122, 0.451) }"
         "QPushButton:hover { background-color: rgba(207, 206, 203, 0.451) }")
-        self.__see_book_borrowers_button.setFont(font)
+        self.__see_book_borrowers_button.setFont(self.__font)
 
         self.__show_all_users_button = QPushButton("SHOW ALL USERS")
         self.__show_all_users_button.setFixedSize(1000, 80)
         self.__show_all_users_button.setStyleSheet("QPushButton { color: white; background-color: rgba(122, 122, 122, 0.451) }"
         "QPushButton:hover { background-color: rgba(207, 206, 203, 0.451) }")
-        self.__show_all_users_button.setFont(font)
+        self.__show_all_users_button.setFont(self.__font)
 
         self.__main_layout = self.__layout_maker(
                                                 True,
@@ -86,4 +91,9 @@ class FirstWindow(QMainWindow):
         for widget in widgets:
             layout.addWidget(widget)
         return layout
-
+    
+    def register_a_new_reader_button_clicked(self):
+        self.__add_a_new_reader_window.resize(self.width(), self.height())
+        self.__add_a_new_reader_window.move(self.pos())
+        self.hide()
+        self.__add_a_new_reader_window.show()

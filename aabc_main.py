@@ -93,7 +93,7 @@ _____name_of_library = "Minnie Muse"
 
 application = QApplication([])
 
-__first_window = FirstWindow(_____name_of_library)
+__first_window = FirstWindow(_____name_of_library, db_connection, cursor)
 __first_window.show()
 
 application.exec()
