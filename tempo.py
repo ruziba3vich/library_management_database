@@ -49,4 +49,58 @@ if __name__ == "__main__":
     window.show()
     sys.exit(app.exec_())
 
-#"C:/Users/Gulzhaev/Desktop/library_management/pictures"
+# "C:/Users/Gulzhaev/Desktop/library_management/pictures"
+
+
+
+
+
+
+
+# from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QPushButton
+# from PyQt5.QtCore import QTimer
+
+# class NotificationBar(QWidget):
+#     def __init__(self, color, parent=None):
+#         super().__init__(parent)
+#         self.label = QLabel(self)
+#         self.layout = QVBoxLayout(self)
+#         self.layout.addWidget(self.label)
+#         self.setLayout(self.layout)
+#         self.setStyleSheet(f"background-color: {color}; color: white; padding: 8px;")
+#         self.setFixedHeight(40)
+#         self.hide()
+
+#         self.timer = QTimer(self)
+#         self.timer.timeout.connect(self.hide_notification)
+
+#     def show_notification(self, message):
+#         self.label.setText(message)
+#         self.show()
+#         self.timer.start(5000)  # Set the duration in milliseconds (5 seconds in this example)
+
+#     def hide_notification(self):
+#         self.hide()
+#         self.timer.stop()
+
+# class YourMainWindow(QMainWindow):
+#     def __init__(self):
+#         super().__init__()
+
+#         # Your GUI setup here
+
+#         self.notification_bar = NotificationBar(self)
+#         self.setCentralWidget(self.notification_bar)
+
+#         # Example button to trigger a notification
+#         self.button = QPushButton("Show Notification", self)
+#         self.button.clicked.connect(self.show_example_notification)
+
+#     def show_example_notification(self):
+#         self.notification_bar.show_notification("This is a sample notification.")
+
+# # Instantiate and run your application
+# app = QApplication([])
+# main_window = YourMainWindow()
+# main_window.show()
+# app.exec_()
